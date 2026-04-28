@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lightsaber Rice Krispie Treats</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --space: #05080f;
+    --deep: #0a0e1a;
+    --card: #0d1425;
+    --blue: #00aaff;
+    --blue-glow: rgba(0,170,255,0.3);
+    --red: #ff2222;
+    --red-glow: rgba(255,34,34,0.3);
+    --gold: #ffe066;
+    --text: #c8d8f0;
+    --muted: #5a7090;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--space);
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Star field */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 30%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 55%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 33% 88%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 78% 70%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 18% 42%, rgba(255,255,255,0.5) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .may-fourth {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+
+  .title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(28px, 6vw, 48px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #ffffff 0%, var(--blue) 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  /* Lightsaber divider */
+  .saber-divider {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 32px 0;
+    justify-content: center;
+  }
+
+  .saber-handle {
+    width: 24px;
+    height: 8px;
+    background: linear-gradient(90deg, #444, #888, #444);
+    border-radius: 2px 0 0 2px;
+    flex-shrink: 0;
+  }
+
+  .saber-blade {
+    height: 3px;
+    width: 200px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .saber-blue .saber-blade {
+    background: linear-gradient(90deg, var(--blue), transparent);
+    box-shadow: 0 0 8px var(--blue), 0 0 20px var(--blue-glow);
+  }
+
+  .saber-red .saber-blade {
+    background: linear-gradient(90deg, var(--red), transparent);
+    box-shadow: 0 0 8px var(--red), 0 0 20px var(--red-glow);
+  }
+
+  /* Stats bar */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .stat {
+    background: var(--card);
+    border: 1px solid rgba(0,170,255,0.15);
+    border-radius: 8px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* Ingredients */
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .ingredient {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ingredient-emoji {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .ingredient-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .ingredient-amount {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* Steps */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .step {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px 20px 20px 24px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 16px;
+    align-items: start;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .step:hover {
+    border-color: rgba(0,170,255,0.2);
+  }
+
+  .step.warning {
+    border-color: rgba(255,160,0,0.25);
+    background: linear-gradient(135deg, var(--card), rgba(255,160,0,0.04));
+  }
+
+  .step-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 28px;
+    font-weight: 900;
+    color: rgba(0,170,255,0.2);
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .step-content {}
+
+  .step-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .step.warning .step-title {
+    color: #ffaa00;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    font-weight: 300;
+  }
+
+  .step-desc strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .tip {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(0,170,255,0.06);
+    border-left: 2px solid var(--blue);
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .step.warning .tip {
+    background: rgba(255,160,0,0.06);
+    border-left-color: #ffaa00;
+  }
+
+  /* Lightsaber preview */
+  .saber-preview {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+
+  .saber-preview-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .saber-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 12px;
+  }
+
+  .saber-visual-handle {
+    width: 32px;
+    height: 12px;
+    background: linear-gradient(90deg, #333, #777, #333);
+    border-radius: 3px 0 0 3px;
+    border: 1px solid #666;
+  }
+
+  .saber-visual-blade {
+    height: 12px;
+    width: 160px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .blade-blue {
+    background: linear-gradient(90deg, var(--blue) 60%, transparent);
+    box-shadow: 0 0 12px var(--blue), 0 0 30px var(--blue-glow), 0 0 60px rgba(0,170,255,0.1);
+  }
+
+  .blade-red {
+    background: linear-gradient(90deg, var(--red) 60%, transparent);
+    box-shadow: 0 0 12px var(--red), 0 0 30px var(--red-glow), 0 0 60px rgba(255,34,34,0.1);
+  }
+
+  .saber-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  .saber-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--muted);
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .ingredients-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="may-fourth">★ May the Fourth Be With You ★</div>
+    <h1 class="title">Lightsaber<br>Rice Krispie Treats</h1>
+    <p class="subtitle">An idiot-proof recipe for two</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-value">20</span>
+      <span class="stat-label">Min Prep</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">10</span>
+      <span class="stat-label">Min Set</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">8–10</span>
+      <span class="stat-label">Sabers</span>
+    </div>
+  </div>
+
+  <div class="section-title">⬡ Supplies</div>
+  <div class="ingredients-grid">
+    <div class="ingredient">
+      <span class="ingredient-emoji">🥣</span>
+      <div class="ingredient-text">
+        Rice Krispies
+        <span class="ingredient-amount">6 cups</span>
+      </div>
+    </div>
+    <div class="ingredient">
+      <span class="ingredient-emoji">☁️</span>
+      <div class="ingredient-text">
+        Marshmallows
+        <span class="ingredient-amount">1 bag (10 oz)</span>
+      </div>
+    </div>
+    <div class="ingredient">
+      <span class="ingredient-emoji">🧈</span>
+      <div class="ingredient-text">
+        Butter
+        <span class="ingredient-amount">3 tablespoons</span>
+      </div>
+    </div>
+    <div class="ingredient">
+      <span class="ingredient-emoji">🥨</span>
+      <div class="ingredient-text">
+        Pretzel rods
+        <span class="ingredient-amount">8–10 rods</span>
+      </div>
+    </div>
+    <div class="ingredient">
+      <span class="ingredient-emoji">🔵</span>
+      <div class="ingredient-text">
+        Blue candy melts
+        <span class="ingredient-amount">1 bag</span>
+      </div>
+    </div>
+    <div class="ingredient">
+      <span class="ingredient-emoji">🔴</span>
+      <div class="ingredient-text">
+        Red candy melts
+        <span class="ingredient-amount">1 bag</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">⬡ Mission Briefing</div>
+  <div class="steps">
+
+    <div class="step warning">
+      <div class="step-number">01</div>
+      <div class="step-content">
+        <div class="step-title">⚠ Melt the Butter</div>
+        <div class="step-desc">Put a <strong>large pot</strong> on the stove over <strong>low heat</strong>. Add the <strong>3 tablespoons of butter</strong>. Let it melt slowly — don't rush this with high heat or it'll burn.</div>
+        <div class="tip">Low and slow is the move. Burnt butter smells bad and ruins everything.</div>
+      </div>
+    </div>
+
+    <div class="step warning">
+      <div class="step-number">02</div>
+      <div class="step-content">
+        <div class="step-title">⚠ Add Marshmallows</div>
+        <div class="step-desc">Pour the <strong>entire bag of marshmallows</strong> into the pot. Stir constantly with a wooden spoon or spatula. Keep heat on <strong>low</strong>. They'll melt in about 3–4 minutes. Keep stirring until completely smooth — no lumps.</div>
+        <div class="tip">The second they're fully melted, pull the pot off the heat. Overcooked marshmallow = hard treats.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">03</div>
+      <div class="step-content">
+        <div class="step-title">Add the Cereal</div>
+        <div class="step-desc">Take the pot off the heat. Pour in all <strong>6 cups of Rice Krispies</strong>. Stir quickly until every piece is coated. Work fast — it gets harder to mix as it cools.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">04</div>
+      <div class="step-content">
+        <div class="step-title">Shape the Blades</div>
+        <div class="step-desc">Spray a 9x13 pan or baking sheet with cooking spray. Dump the mixture in. <strong>Wet your hands slightly</strong> (stops sticking) and press it into an even layer about <strong>1 inch thick</strong>. Let it cool for <strong>5 minutes</strong>.</div>
+        <div class="tip">Don't press too hard — lighter pressure = softer treats.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">05</div>
+      <div class="step-content">
+        <div class="step-title">Cut Into Rectangles</div>
+        <div class="step-desc">Once cooled, cut into <strong>long rectangles</strong> — about 1 inch wide and 4–5 inches long. These are your lightsaber blades. You should get 8–10 pieces. A pizza cutter works great here if you have one.</div>
+      </div>
+    </div>
+
+    <div class="step warning">
+      <div class="step-number">06</div>
+      <div class="step-content">
+        <div class="step-title">⚠ Melt the Candy Melts</div>
+        <div class="step-desc">Do <strong>each color separately</strong>. Pour half a bag of blue melts into a microwave-safe bowl. Microwave in <strong>30-second bursts</strong>, stirring between each one. Usually takes 2–3 rounds. Repeat with red in a separate bowl. The chocolate should be smooth and drizzle-able — not thick.</div>
+        <div class="tip">If it's too thick, add half a teaspoon of vegetable oil and stir. Don't overheat or it seizes up.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">07</div>
+      <div class="step-content">
+        <div class="step-title">Assemble the Sabers</div>
+        <div class="step-desc">Press a <strong>pretzel rod</strong> into one end of each treat rectangle — this is the handle. Then <strong>dip or drizzle</strong> the treat part in your color of choice. Blue for Jedi. Red for Sith. Do half and half so you each have your own side.</div>
+        <div class="tip">Dipping = full coverage. Drizzling = messier but more fun to do together.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">08</div>
+      <div class="step-content">
+        <div class="step-title">Let Them Set</div>
+        <div class="step-desc">Lay the finished sabers on parchment paper or a wire rack. They'll be ready in <strong>5–10 minutes</strong> at room temperature, or pop them in the fridge for 3 minutes if you're impatient.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">09</div>
+      <div class="step-content">
+        <div class="step-title">Duel (or Eat)</div>
+        <div class="step-desc">Hold them up. Make the sound. Take a photo. Then eat them. <strong>You're done.</strong></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Lightsaber preview -->
+  <div class="saber-preview">
+    <div class="saber-preview-title">What you're making</div>
+    <div class="saber-row">
+      <div>
+        <div class="saber-visual">
+          <div class="saber-visual-handle"></div>
+          <div class="saber-visual-blade blade-blue"></div>
+        </div>
+        <div class="saber-label">Blue — Jedi / AM's</div>
+      </div>
+      <div>
+        <div class="saber-visual">
+          <div class="saber-visual-handle"></div>
+          <div class="saber-visual-blade blade-red"></div>
+        </div>
+        <div class="saber-label">Red — Sith / Rohan's</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">★ May the Fourth Be With You ★</div>
+
+</div>
+</body>
+</html>

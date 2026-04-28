@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>May the 4th Be With You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #FFD700;
+      --saber-blue: #4FC3F7;
+      --saber-red: #EF5350;
+      --saber-green: #69F0AE;
+      --dark: #050A18;
+      --panel: rgba(255,255,255,0.04);
+      --panel-hover: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.08);
+      --text: #C9D6F0;
+      --muted: #6B7FA8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--dark);
+      color: var(--text);
+      font-family: 'Exo 2', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 8%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 65%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 22%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 80% 50%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 48% 30%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 72% 12%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 90%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 20% 20%, rgba(255,255,255,0.9) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      animation: fadeDown 0.8s ease both;
+    }
+    .crawl-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(28px, 7vw, 48px);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1.1;
+      text-shadow: 0 0 40px rgba(255,215,0,0.4), 0 0 80px rgba(255,215,0,0.1);
+      letter-spacing: 0.05em;
+    }
+    .subtitle {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      font-style: italic;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.3; }
+    .divider-icon { color: var(--gold); font-size: 16px; opacity: 0.6; }
+    .date-badge {
+      display: inline-block;
+      margin-top: 16px;
+      background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,215,0,0.04));
+      border: 1px solid rgba(255,215,0,0.25);
+      border-radius: 4px;
+      padding: 6px 20px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg,
+        var(--saber-blue) 0%,
+        rgba(79,195,247,0.15) 25%,
+        var(--gold) 40%,
+        rgba(255,215,0,0.15) 55%,
+        var(--saber-red) 70%,
+        rgba(239,83,80,0.15) 82%,
+        var(--saber-green) 100%);
+    }
+
+    .block {
+      position: relative;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .block:nth-child(1) { animation-delay: 0.1s; }
+    .block:nth-child(2) { animation-delay: 0.2s; }
+    .block:nth-child(3) { animation-delay: 0.3s; }
+    .block:nth-child(4) { animation-delay: 0.4s; }
+    .block:nth-child(5) { animation-delay: 0.5s; }
+    .block:nth-child(6) { animation-delay: 0.6s; }
+
+    .block-dot {
+      position: absolute;
+      left: -28px;
+      top: 18px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid;
+      background: var(--dark);
+    }
+    .block-dot.blue  { border-color: var(--saber-blue);  box-shadow: 0 0 8px var(--saber-blue); }
+    .block-dot.gold  { border-color: var(--gold);        box-shadow: 0 0 8px var(--gold); }
+    .block-dot.red   { border-color: var(--saber-red);   box-shadow: 0 0 8px var(--saber-red); }
+    .block-dot.green { border-color: var(--saber-green); box-shadow: 0 0 8px var(--saber-green); }
+
+    .block-inner {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 22px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .block-inner:hover { background: var(--panel-hover); border-color: rgba(255,255,255,0.13); }
+
+    .block-time {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .block-label {
+      display: inline-block;
+      font-size: 9px;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-bottom: 10px;
+    }
+    .label-morning { background: rgba(79,195,247,0.1);  color: var(--saber-blue);  border: 1px solid rgba(79,195,247,0.2); }
+    .label-midday  { background: rgba(255,215,0,0.1);   color: var(--gold);        border: 1px solid rgba(255,215,0,0.2); }
+    .label-evening { background: rgba(239,83,80,0.1);   color: var(--saber-red);   border: 1px solid rgba(239,83,80,0.2); }
+    .label-night   { background: rgba(105,240,174,0.1); color: var(--saber-green); border: 1px solid rgba(105,240,174,0.2); }
+
+    .block-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+    .block-title.blue  { color: var(--saber-blue); }
+    .block-title.gold  { color: var(--gold); }
+    .block-title.red   { color: var(--saber-red); }
+    .block-title.green { color: var(--saber-green); }
+
+    /* ── List items ── */
+    .items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .items li {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text);
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .items li::before { content: '—'; position: absolute; left: 0; color: var(--muted); font-size: 11px; }
+    .items li.sub { padding-left: 28px; color: var(--muted); font-size: 12px; }
+    .items li.sub::before { content: '·'; left: 14px; }
+
+    /* ── Recipe card ── */
+    .recipe-card {
+      margin-top: 16px;
+      background: rgba(79,195,247,0.04);
+      border: 1px solid rgba(79,195,247,0.15);
+      border-radius: 6px;
+      padding: 16px 18px;
+    }
+    .recipe-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--saber-blue);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .recipe-section {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin: 10px 0 6px;
+    }
+    .recipe-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .recipe-list li {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text);
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .recipe-list li::before { content: '·'; position: absolute; left: 0; color: var(--saber-blue); }
+    .recipe-steps { counter-reset: step; display: flex; flex-direction: column; gap: 5px; }
+    .recipe-steps li {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text);
+      padding-left: 22px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .recipe-steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      color: var(--saber-blue);
+      background: rgba(79,195,247,0.12);
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Beer card ── */
+    .beer-card {
+      margin-top: 16px;
+      background: rgba(239,83,80,0.04);
+      border: 1px solid rgba(239,83,80,0.15);
+      border-radius: 6px;
+      padding: 16px 18px;
+    }
+    .beer-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--saber-red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .beer-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .beer-list li {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text);
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .beer-list li::before { content: '🍺'; position: absolute; left: 0; font-size: 11px; top: 1px; }
+
+    /* ── Night card ── */
+    .night-card {
+      margin-top: 16px;
+      background: rgba(105,240,174,0.04);
+      border: 1px solid rgba(105,240,174,0.15);
+      border-radius: 6px;
+      padding: 16px 18px;
+    }
+    .night-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--saber-green);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* ── Tip ── */
+    .tip {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-left: 2px solid;
+      font-size: 12px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+      background: rgba(255,255,255,0.02);
+      border-radius: 0 4px 4px 0;
+      line-height: 1.5;
+    }
+    .tip.blue  { border-color: rgba(79,195,247,0.4); }
+    .tip.gold  { border-color: rgba(255,215,0,0.4); }
+    .tip.red   { border-color: rgba(239,83,80,0.4); }
+    .tip.green { border-color: rgba(105,240,174,0.4); }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      margin-top: 52px;
+      animation: fadeUp 0.8s ease 0.7s both;
+    }
+    .force-quote {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 400px;
+      margin: 0 auto 16px;
+    }
+    .force-sig {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      color: rgba(255,215,0,0.35);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .saber-top {
+      height: 2px;
+      background: linear-gradient(90deg, var(--saber-blue), var(--gold), var(--saber-red), var(--saber-green));
+      margin-bottom: 40px;
+      border-radius: 2px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="saber-top"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="crawl-label">A Long Time Ago · In a Kitchen Far Far Away</div>
+    <h1 class="title">MAY THE 4TH<br>BE WITH YOU</h1>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">✦</div>
+      <div class="divider-line"></div>
+    </div>
+    <p class="subtitle">A day itinerary for two Jedi and a very important Padawan</p>
+    <div class="date-badge">MAY 4, 2026</div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline">
+
+    <!-- 1. MORNING -->
+    <div class="block">
+      <div class="block-dot blue"></div>
+      <div class="block-inner">
+        <div class="block-time">0700 Hours · Morning</div>
+        <span class="block-label label-morning">Rise &amp; Shine, Rebel</span>
+        <div class="block-title blue">Twin Suns Breakfast</div>
+        <ul class="items">
+          <li><strong>Twin Suns Tiramisu Coffee</strong> — rich, layered, mascarpone-forward. Two suns, one mug.</li>
+          <li><strong>Princess Leia Cinnamon Buns</strong> — iced in white and blue only. The General deserves no other color.</li>
+        </ul>
+        <div class="tip blue">Swirl white icing as the base, then drizzle blue in a thin spiral. If you're feeling ambitious, shape the white icing into Leia's iconic side bun silhouette on each roll.</div>
+      </div>
+    </div>
+
+    <!-- 2. LUNCH -->
+    <div class="block">
+      <div class="block-dot gold"></div>
+      <div class="block-inner">
+        <div class="block-time">1200 Hours · Midday Mess</div>
+        <span class="block-label label-midday">Oga's Cantina Approved</span>
+        <div class="block-title gold">Ronto Wraps</div>
+        <ul class="items">
+          <li><strong>Pita base</strong> — warm and pliable, charred directly on a burner flame.</li>
+          <li><strong>Grilled sausage + fried ham</strong> — the dual-protein move straight from Galaxy's Edge.</li>
+          <li><strong>Park-style coleslaw</strong> — creamy, cool, layered last so it stays crisp.</li>
+        </ul>
+        <div class="tip gold">30 seconds per side on an open burner gives the pita that authentic char. Layer the slaw on top of the proteins right before wrapping — keeps everything from going soggy.</div>
+      </div>
+    </div>
+
+    <!-- 3. BLACK CAF -->
+    <div class="block">
+      <div class="block-dot blue"></div>
+      <div class="block-inner">
+        <div class="block-time">1430 Hours · Rest Cycle</div>
+        <span class="block-label label-morning">Docking Bay 7 Copycat</span>
+        <div class="block-title blue">Black Caf Cold Brew</div>
+        <ul class="items">
+          <li>A faithful home recreation of the Disneyland Star Wars Land original — bold cold brew, cream cheese vanilla cold foam, Cocoa Puffs on top like asteroids.</li>
+        </ul>
+
+        <div class="recipe-card">
+          <div class="recipe-title">⚙ Jedi Brew Protocol · Makes 1</div>
+
+          <div class="recipe-section">Cold Foam</div>
+          <ul class="recipe-list">
+            <li>3 tbsp whipped cream cheese</li>
+            <li>2 tbsp vanilla syrup</li>
+            <li>1 tbsp heavy cream</li>
+            <li>1 tbsp whole milk</li>
+          </ul>
+
+          <div class="recipe-section">The Brew</div>
+          <ul class="recipe-list">
+            <li>1½ cups cold brew coffee</li>
+            <li>1 tbsp vanilla syrup</li>
+            <li>2 tbsp Cocoa Puffs cereal</li>
+            <li>Ice</li>
+          </ul>
+
+          <div class="recipe-section">Instructions</div>
+          <ol class="recipe-steps">
+            <li>Combine cream cheese, 2 tbsp vanilla syrup, heavy cream, and milk in a small jar. Froth 1 minute until smooth. Set aside.</li>
+            <li>Add cold brew to a tall glass. Stir in 1 tbsp vanilla syrup. Top with ice.</li>
+            <li>Pour cream cheese cold foam over the top.</li>
+            <li>Sprinkle Cocoa Puffs on top like asteroids. Serve immediately.</li>
+          </ol>
+        </div>
+
+        <div class="tip blue">Milk and cream should be cold; cream cheese slightly softened. Don't skip the Cocoa Puffs — they are structurally essential to the experience.</div>
+      </div>
+    </div>
+
+    <!-- 4. EVENING - FAMILY -->
+    <div class="block">
+      <div class="block-dot red"></div>
+      <div class="block-inner">
+        <div class="block-time">1800 Hours · Family Assembly</div>
+        <span class="block-label label-evening">The Mandalorian &amp; The Child</span>
+        <div class="block-title red">Lightsaber Night + BK Bounty Meal</div>
+        <ul class="items">
+          <li><strong>Pretzel Rod Lightsabers</strong> — white chocolate dipped, colored blue and red. Set up a dipping station. Ava picks her allegiance. This is non-negotiable.</li>
+          <li><strong>BK Mandalorian Bounty Meal</strong> — available May 4th, while supplies last:</li>
+          <li class="sub">BBQ Bounty Whopper® — flame-grilled, Swiss, bacon, pickle chips, Bounty BBQ Sauce in a helmet-shaped carton</li>
+          <li class="sub">Grogu's Blue Cookie Shake — soft serve + blue sugar cookie syrup + blue cookies</li>
+          <li class="sub">Grogu's Garlic Chicken Fries — parmesan &amp; garlic seasoned with garlic dipping sauce</li>
+          <li class="sub">Imperial Cheddar Ranch Tots — cheddar-stuffed crispy tots in an Imperial carton</li>
+          <li class="sub">Mandalorian King Jr. Meal for Ava — themed toy included while supplies last</li>
+          <li><strong>Local Star Wars beers</strong> — for the adults, while the kids dip pretzel rods and argue about saber colors.</li>
+          <li><strong>Collectible cups</strong> — unlock with the Bounty Bundle or a combo purchase.</li>
+        </ul>
+
+
+        <div class="tip red">Order the Bounty Bundle to get all four items + collectible cups in one shot. Keep Ava's King Jr. Meal as a separate order so she gets the Mando toy. This is the way.</div>
+      </div>
+    </div>
+
+    <!-- 5. POST-BEDTIME -->
+    <div class="block">
+      <div class="block-dot green"></div>
+      <div class="block-inner">
+        <div class="block-time">2100 Hours · Post-Bedtime · Adults Only</div>
+        <span class="block-label label-night">Order 66 Has Been Executed</span>
+        <div class="block-title green">The Alliance Debrief</div>
+
+        <div class="night-card">
+          <div class="night-title">🎬 Film Mission · Choose Your Screening</div>
+          <ul class="items">
+            <li><strong>If you want something new:</strong> <em>Andor</em> Season 2 is airing now — pick up where you left off. Best Star Wars writing, full stop.</li>
+            <li><strong>If you want something classic:</strong> <em>The Empire Strikes Back</em> — the obvious correct answer, especially on May 4th.</li>
+            <li><strong>If you want something fun:</strong> <em>The Mandalorian</em> Season 1 opener — tight, cinematic, and sets the mood perfectly given the day's theme.</li>
+            <li><strong>If you're feeling chaotic:</strong> <em>The Holiday Special</em> — for the daring. Not recommended. But it's yours to choose.</li>
+          </ul>
+        </div>
+
+        <div class="night-card" style="margin-top:12px;">
+          <div class="night-title">🍸 Drinks Menu · Pick Your Side</div>
+          <ul class="items">
+            <li><strong>Light Side — Blue Milk Cocktail:</strong> Coconut rum + blue curaçao + pineapple juice + a splash of cream. Serve over ice. Named correctly. Tastes tropical.</li>
+            <li><strong>Dark Side — Darth Mule:</strong> Bourbon + ginger beer + blackberry juice + lime. Serve in a copper mug if you have one. Dark, spiced, dangerous.</li>
+            <li><strong>Lightsaber Shot:</strong> Layer blue curaçao under white rum — or red grenadine under tequila. One for each side of the Force.</li>
+            <li><strong>Keep it simple:</strong> Finish the local Star Wars beers from the lightsaber activity. No shame. The night has been long.</li>
+          </ul>
+        </div>
+
+        <div class="tip green">This is the part of the day that's just for the two of you. Pick one movie, pour one drink, and let the galaxy wait until morning.</div>
+      </div>
+    </div>
+
+  </div><!-- end timeline -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">✦</div>
+      <div class="divider-line"></div>
+    </div>
+    <p class="force-quote">"In my experience, there's no such thing as luck." — But there is such a thing as a well-planned Star Wars day, and this is it.</p>
+    <div class="force-sig">MAY THE 4TH BE WITH YOUR HOUSEHOLD · ALWAYS</div>
+  </div>
+
+</div>
+</body>
+</html>
